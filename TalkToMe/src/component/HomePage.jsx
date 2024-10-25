@@ -3,6 +3,7 @@ import { features } from "../mocks/cardsFeatures";
 import FeatureCard from "./FeaturesCard";
 import Header from "./Header";
 import Footer from "./Footer";
+import { Link } from "react-router-dom";
 
 const HomePage = () => {
   return (
@@ -21,7 +22,9 @@ const HomePage = () => {
           techniques and exercises.
         </p>
         <button className="mt-8 px-6 py-3 bg-[#B7E2FF] text-gray-900 rounded-full shadow transition hover:bg-blue-300">
-          Chat now →
+          <Link to={"/chat"}>
+          Talk now →
+          </Link>
         </button>
       </main>
 

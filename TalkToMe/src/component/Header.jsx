@@ -25,6 +25,11 @@ const Header = () => {
             Resources
           </Link>
         </nav>
+        <button className="mt-8 px-6 py-3 bg-[#B7E2FF] text-gray-900 rounded-full shadow transition hover:bg-blue-300 md:inline-block hidden">
+          <Link to={"/chat"}>
+          Talk now →
+          </Link>
+        </button>
       </header> 
   )
 }
