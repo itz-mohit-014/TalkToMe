@@ -1,0 +1,5 @@
+ <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" className="w-24 h-24 mb-4" viewBox="0 0 100 100" fill="none" stroke="currentColor">
+          <path d="M30 50 Q50 70 70 50" strokeWidth="2" />
+          <circle cx="40" cy="40" r="5" strokeWidth="2" />
+          <circle cx="60" cy="40" r="5" strokeWidth="2" />
+        </svg>

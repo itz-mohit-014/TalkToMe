@@ -1,3 +1,9 @@
+import card1 from '../assets/cardImages/card1.svg'
+import card2 from '../assets/cardImages/card2.svg'
+import card3 from '../assets/cardImages/card3.svg'
+import card4 from '../assets/cardImages/card4.svg'
+import card5 from '../assets/cardImages/card5.svg'
+
 export const features = [
     {
       id: 1,
@@ -6,7 +12,7 @@ export const features = [
       gradient: "bg-gradient-to-br from-[#E6EEFF] via-[#EFE6FF] to-[#F5E6FF]",
       tag: "mood tracker",
       textColor: "text-[#B794F4]",
-      svg: '/cardImages/card1.svg'
+      svg: card1
     },
     {
       id: 2,
@@ -15,7 +21,7 @@ export const features = [
       gradient: "bg-gradient-to-br from-[#E6FFE8] via-[#F0FFE6] to-[#F5FFE6]",
       textColor: "text-[#68D391]",
       tag: "meditation catalog",
-      svg: '/cardImages/card2.svg'
+      svg: card2
     },
     {
       id: 3,
@@ -24,7 +30,7 @@ export const features = [
       gradient: "bg-gradient-to-br from-[#FFE6EC] via-[#FFE6F0] to-[#FFE6F5]",
       textColor: "text-[#FC8181]",
       tag: "brain exercises",
-      svg:'/cardImages/card3.svg'
+      svg:card3
     },
     {
       id: 4,
@@ -33,7 +39,7 @@ export const features = [
       gradient: "bg-gradient-to-br from-[#FFF3E6] via-[#FFE9E6] to-[#FFE6E6]",
       textColor: "text-[#F6AD55]",
       tag: "gratitude practice",
-      svg: '/cardImages/card4.svg'
+      svg: card4
     },
     {
       id: 5,
@@ -42,6 +48,6 @@ export const features = [
       gradient: "bg-gradient-to-br from-[#E6FBFF] via-[#E6F5FF] to-[#E6EFFF]",
       textColor: "text-[#63B3ED]",
       tag: "goal plan",
-      svg: '/cardImages/card5.svg'
+      svg: card5
     }
   ];
