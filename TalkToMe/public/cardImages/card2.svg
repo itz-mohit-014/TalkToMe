@@ -1,0 +1,7 @@
+<svg className="w-24 h-24 mb-4" viewBox="0 0 100 100" fill="none" stroke="currentColor">
+          <circle cx="50" cy="50" r="20" strokeWidth="2" />
+          <path d="M50 30 L50 70" strokeWidth="2" />
+          <path d="M30 50 L70 50" strokeWidth="2" />
+          <path d="M35 35 L65 65" strokeWidth="2" />
+          <path d="M35 65 L65 35" strokeWidth="2" />
+        </svg>

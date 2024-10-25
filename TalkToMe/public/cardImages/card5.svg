@@ -1,0 +1,6 @@
+<svg className="w-24 h-24 mb-4" viewBox="0 0 100 100" fill="none" stroke="currentColor">
+          <rect x="30" y="30" width="40" height="40" strokeWidth="2" />
+          <path d="M40 45 L60 45" strokeWidth="2" />
+          <path d="M40 55 L60 55" strokeWidth="2" />
+          <path d="M40 65 L50 65" strokeWidth="2" />
+        </svg>
