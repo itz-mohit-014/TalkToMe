@@ -24,7 +24,6 @@ const SuggestionTags = ({setAllMessageList}) => {
       "Emotional Support"
     ];
   
-
     const sendMessage = async (message) => {
       try {
         const id = localStorage.getItem("chatID");
