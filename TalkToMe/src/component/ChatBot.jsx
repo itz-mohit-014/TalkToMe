@@ -5,12 +5,14 @@ import MarkdownRenderer from "./markdownRender";
 import SuggestionTags from "./SuggestionTags";
 import PromptBox from "./PromptBox";
 import VoiceRecordingDialog from "./VoiceListening";
+import VoiceRecorderDialog from "./VoiceListening";
 
 
 const ChatUI = () => {
   const [allMessageList, setAllMessageList] = useState([]);
   const messagesEndRef = useRef(null);
-  const [isRecording, setIsRecording] = useState(false);
+  const [isRecording, setIsRecording] = useState(true);
+  const [isOpen , setIsOpen] = useState(false)
 
   const startChat = async (url, Credential = null) => {
     try {
@@ -60,18 +62,17 @@ const ChatUI = () => {
   return (
 
     <div className="flex flex-col h-screen bg-gray-100 relative">
-      {/* <LeftSidebar chatHistory={chatHistories} setAllMessageList={setAllMessageList}/> */}
+      <img src="/logo.png" alt="" className="fixed -top-[20%] left-[10%] h-screen object-contain"/>
       <Header className=""/>
       {/* Main Chat Area */}
       <div
-        className={`flex-1 mt-2  flex flex-col gap-4 p-4 pb-16 max-w-5xl mx-auto  ${
+        className={`flex-1 mt-2 w-full flex flex-col gap-4 p-4 pb-16 max-w-[80%] mx-auto  ${
           allMessageList.length < 1 ? "justify-center" : ""
         } relative`}
       >
         {/* Chat Messages */}
         <div className="overflow-y-auto">
 
-       
         {allMessageList.length > 0 ? (
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
             {allMessageList.map((msg) => (
@@ -113,7 +114,7 @@ const ChatUI = () => {
         {allMessageList.length < 1 && <SuggestionTags setAllMessageList={setAllMessageList}/>}
         </div>
 
-        {isRecording && <VoiceRecordingDialog />}
+        {isRecording && <VoiceRecordingDialog isRecording={isRecording}/>}
 
         <PromptBox
           setAllMessageList={setAllMessageList}
@@ -121,6 +122,9 @@ const ChatUI = () => {
           isRecording={isRecording}
         />
       </div>
+{
+      isOpen && 
+      <VoiceRecorderDialog />}
     </div>
   );
 };

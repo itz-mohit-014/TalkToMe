@@ -2,6 +2,7 @@ import { Loader, Mic, Send } from "lucide-react";
 import React, { useState } from "react";
 import VoiceRecorderDialog from "./VoiceListening";
 
+
 const PromptBox = ({ setAllMessageList , setIsRecording, isRecording }) => {
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -63,7 +64,13 @@ const PromptBox = ({ setAllMessageList , setIsRecording, isRecording }) => {
   return (
     <div className="border-t bg-gray-50 border border-slate-300 p-4 overflow-hidden rounded-xl fixed bottom-4 w-[80%] left-1/2 -translate-x-1/2">
       <div className="flex items-center gap-2">
-        <VoiceRecorderDialog />
+        <button
+        onClick={() => setIsRecording(true)}
+        className="p-2 rounded-full bg-blue-500 hover:bg-blue-600 text-white"
+      >
+        <Mic size={24} />
+      </button>
+
         <div className="flex-1 relative">
           <textarea
             value={message}

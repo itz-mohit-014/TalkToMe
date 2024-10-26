@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { Mic } from 'lucide-react';
 
-const VoiceRecorderDialog = ({}) => {
-  const [isOpen, setIsOpen] = useState(false);
+const VoiceRecorderDialog = () => {
+  const [isOpen, setIsOpen] = useState();
   const [isRecording, setIsRecording] = useState(false);
   const [audioBlob, setAudioBlob] = useState(null);
   const mediaRecorderRef = useRef(null);
@@ -78,14 +78,7 @@ const VoiceRecorderDialog = ({}) => {
 
   return (
     <div>
-      <button
-        onClick={() => setIsOpen(true)}
-        className="p-2 rounded-full bg-blue-500 hover:bg-blue-600 text-white"
-      >
-        <Mic size={24} />
-      </button>
-
-      {isOpen && (
+      
         <div className="fixed inset-0 z-10 bg-black bg-opacity-50 px-4 flex items-center justify-center" onClick={(e) => setIsOpen(false) }>
           <div className="bg-white rounded-lg p-6 w-full sm:w-96 shadow-xl" onClick={(e) => {
              e.stopPropagation();
@@ -151,7 +144,6 @@ const VoiceRecorderDialog = ({}) => {
             </div>
           </div>
         </div>
-      )}
     </div>
   );
 };

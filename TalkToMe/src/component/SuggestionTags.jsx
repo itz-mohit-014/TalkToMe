@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const SuggestionTags = (setAllMessageList) => {
+const SuggestionTags = ({setAllMessageList}) => {
     const [position, setPosition] = useState(0);
     
     // Mental health related topics
