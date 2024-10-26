@@ -1,6 +1,7 @@
 import { Loader, Mic, Send } from "lucide-react";
 import React, { useState } from "react";
 import VoiceRecorderDialog from "./VoiceListening";
+import { BASE_URL } from "../services/api";
 
 
 const PromptBox = ({ setAllMessageList , setIsRecording, isRecording }) => {
@@ -11,7 +12,7 @@ const PromptBox = ({ setAllMessageList , setIsRecording, isRecording }) => {
     try {
       const id = localStorage.getItem("chatID");
       const response = await fetch(
-        `http://localhost:3000/api/v1/chats/${id}/messages`,
+        `${BASE_URL}/${id}/messages`,
         {
           method: "POST",
           headers: {

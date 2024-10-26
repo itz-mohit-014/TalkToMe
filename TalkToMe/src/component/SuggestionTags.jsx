@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { BASE_URL } from "../services/api";
 
 const SuggestionTags = ({setAllMessageList}) => {
   const [position, setPosition] = useState(0);
@@ -28,7 +29,7 @@ const SuggestionTags = ({setAllMessageList}) => {
       try {
         const id = localStorage.getItem("chatID");
         const response = await fetch(
-          `http://localhost:3000/api/v1/chats/${id}/messages`,
+          `${BASE_URL}/${id}/messages`,
           {
             method: "POST",
             headers: {

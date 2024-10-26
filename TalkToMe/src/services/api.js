@@ -1,0 +1,1 @@
+export const BASE_URL = "https://talktome-0d75.onrender.com/api/v1/chats";

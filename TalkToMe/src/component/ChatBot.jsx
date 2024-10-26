@@ -6,6 +6,7 @@ import SuggestionTags from "./SuggestionTags";
 import PromptBox from "./PromptBox";
 import VoiceRecordingDialog from "./VoiceListening";
 import VoiceRecorderDialog from "./VoiceListening";
+import { BASE_URL } from "../services/api";
 
 
 const ChatUI = () => {
@@ -46,7 +47,8 @@ const ChatUI = () => {
 
   useEffect(() => {
     if (!localStorage.getItem("chatID"))
-      startChat("http://localhost:3000/api/v1/chats/", {
+      
+      startChat(BASE_URL, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -55,7 +57,7 @@ const ChatUI = () => {
       });
     else {
       const id = localStorage.getItem("chatID");
-      startChat(`http://localhost:3000/api/v1/chats/${id}`);
+      startChat(`${BASE_URL}/${id}`);
     }
   }, []);
 

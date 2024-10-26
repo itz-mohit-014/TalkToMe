@@ -1,28 +1,70 @@
 import React, { useState, useRef } from "react";
 import { Mic } from "lucide-react";
 
-const VoiceRecorderDialog = ({isRecording, setIsRecording}) => {
+const VoiceRecorderDialog = ({ isOpen, setIsOpen }) => {
   const [audioBlob, setAudioBlob] = useState(null);
+  const [isRecording, setIsRecording] = useState(true);
   const mediaRecorderRef = useRef(null);
   const chunksRef = useRef([]);
 
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+const recognition = new SpeechRecognition();
+recognition.onresult = (event) => {
+    const currentIndex = event.resultIndex;
+    const transcript = event.results[currentIndex][0].transcript;
+    content.textContent = transcript;
+    sendMessage(transcript);
+    console.log(transcript)
+    // takeCommand(transcript.toLowerCase());
+};
+
+const sendMessage = async (message) => {
+  try {
+    if(!message.trim()) return;
+    const id = localStorage.getItem("chatID");
+    const response = await fetch(
+      `https://talktome-0d75.onrender.com/api/v1/chats/${id}/messages`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ prompt: message, chatId: id }),
+      }
+    );
+    const data = await response.json();
+    if(data?.chat?.messages){
+      console.log(data);
+      setAllMessageList(data?.chat?.messages);
+    }
+
+    if (data?.chat) {
+      localStorage.setItem("chatID", data?.chat?._id);
+    }
+  } catch (error) {
+    console.log("error", error);
+  }
+};
+
+
   const startRecording = async () => {
     try {
-      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      mediaRecorderRef.current = new MediaRecorder(stream);
+      recognition.start();
+      // const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      // mediaRecorderRef.current = new MediaRecorder(stream);
 
-      mediaRecorderRef.current.ondataavailable = (event) => {
-        chunksRef.current.push(event.data);
-      };
+      // mediaRecorderRef.current.ondataavailable = (event) => {
+      //   chunksRef.current.push(event.data);
+      // };
 
-      mediaRecorderRef.current.onstop = () => {
-        const blob = new Blob(chunksRef.current, { type: "audio/webm" });
-        setAudioBlob(blob);
-        chunksRef.current = [];
-      };
+      // mediaRecorderRef.current.onstop = () => {
+      //   const blob = new Blob(chunksRef.current, { type: "audio/webm" });
+      //   setAudioBlob(blob);
+      //   chunksRef.current = [];
+      // };
 
-      mediaRecorderRef.current.start();
-      setIsRecording(true);
+      // mediaRecorderRef.current.start();
+      // setIsRecording(true);
     } catch (error) {
       console.error("Error accessing microphone:", error);
     }
@@ -47,9 +89,8 @@ const VoiceRecorderDialog = ({isRecording, setIsRecording}) => {
 
     try {
       const chatId = localStorage.getItem("chatID");
-      // Replace with your API endpoint
       const response = await fetch(
-        `http://localhost:3000/api/v1/chats/${chatId}/voice`,
+        `https://talktome-0d75.onrender.com/api/v1/chats/${chatId}/voice`,
         {
           method: "POST",
           body: formData,
@@ -62,10 +103,6 @@ const VoiceRecorderDialog = ({isRecording, setIsRecording}) => {
       if (response.ok) {
         setIsRecording(false);
         setAudioBlob(null);
-      }
-
-      if (data.status == 200) {
-        console.log(data);
       } else {
         console.error("Error:", data.message);
       }
@@ -74,17 +111,17 @@ const VoiceRecorderDialog = ({isRecording, setIsRecording}) => {
     }
   };
 
-  return (
+  return (  isOpen && 
     <div
       className="fixed inset-0 z-10 bg-black bg-opacity-50 px-4 flex items-center justify-center"
-      onClick={(e) => setIsRecording(false)}
+      onClick={() => setIsOpen(false)}
     >
+      {
+
+     
       <div
         className="bg-white rounded-lg p-6 w-full sm:w-96 shadow-xl"
-        onClick={(e) => {
-          e.stopPropagation();
-          setIsRecording(true); 
-        }}
+        onClick={(e) => e.stopPropagation()}
       >
         <div className="text-center">
           <h2 className="text-xl font-bold mb-4">Voice Recorder</h2>
@@ -111,7 +148,7 @@ const VoiceRecorderDialog = ({isRecording, setIsRecording}) => {
               </div>
             </div>
             <button
-              onClick={!isRecording ? stopRecording : startRecording}
+              onClick={isRecording ? startRecording : stopRecording}
               className={`absolute inset-4 rounded-full ${
                 isRecording ? "bg-red-500" : "bg-blue-500"
               } text-white flex items-center justify-center hover:opacity-90`}
@@ -121,8 +158,10 @@ const VoiceRecorderDialog = ({isRecording, setIsRecording}) => {
           </div>
 
           <p className="text-gray-600 mb-4">
-            {!isRecording
+            {isRecording
               ? "Recording in progress..."
+              : null
+              ? "Recording ready to submit."
               : "Click microphone to start recording"}
           </p>
 
@@ -131,7 +170,7 @@ const VoiceRecorderDialog = ({isRecording, setIsRecording}) => {
               onClick={(e) => {
                 e.stopPropagation();
                 stopRecording();
-                setIsRecording(false);
+                setIsOpen(false);
               }}
               className="px-4 py-2 bg-gray-400 rounded hover:bg-gray-300"
             >
@@ -139,7 +178,7 @@ const VoiceRecorderDialog = ({isRecording, setIsRecording}) => {
             </button>
             <button
               onClick={handleSubmit}
-              // disabled={!audioBlob}
+              disabled={isRecording}
               className={`px-4 py-2 rounded ${
                 audioBlob
                   ? "bg-blue-500 text-white hover:bg-blue-600"
@@ -151,6 +190,7 @@ const VoiceRecorderDialog = ({isRecording, setIsRecording}) => {
           </div>
         </div>
       </div>
+      }
     </div>
   );
 };

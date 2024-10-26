@@ -27,25 +27,28 @@ const answerToVoiceMessage = asyncHandler(async (req, res) => {
         const audioFilePath = req.file.path;
 
         // 1. Convert audio to text using Speech-to-Text
-        const audioBytes = fs.readFileSync(audioFilePath).toString('base64');
-        
-        const speechRequest = {
-            audio: {
-                content: audioBytes,
-            },
-            config: {
-                encoding: 'LINEAR16',
-                sampleRateHertz: 16000,
-                languageCode: 'en',
-                alternativeLanguageCodes: ['hi-IN', 'en-US'],
-            },
-        };
 
-        const [speechResponse] = await speechClient.recognize(speechRequest);
-        const prompt = speechResponse.results
-            .map(result => result.alternatives[0].transcript)
-            .join('\n');
-        const detectedLanguage = speechResponse.results[0].languageCode;
+        
+
+        // const audioBytes = fs.readFileSync(audioFilePath).toString('base64');
+        
+        // const speechRequest = {
+        //     audio: {
+        //         content: audioBytes,
+        //     },
+        //     config: {
+        //         encoding: 'LINEAR16',
+        //         sampleRateHertz: 16000,
+        //         languageCode: 'en',
+        //         alternativeLanguageCodes: ['hi-IN', 'en-US'],
+        //     },
+        // };
+
+        // const [speechResponse] = await speechClient.recognize(speechRequest);
+        // const prompt = speechResponse.results
+        //     .map(result => result.alternatives[0].transcript)
+        //     .join('\n');
+        // const detectedLanguage = speechResponse.results[0].languageCode;
 
         // 2. Get response from Gemini AI
         const result = await model.generateContent(prompt);
