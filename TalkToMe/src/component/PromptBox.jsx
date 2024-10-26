@@ -1,25 +1,56 @@
-import { Mic, Send } from 'lucide-react';
-import React, { useState } from 'react'
+import { Loader, Mic, Send } from "lucide-react";
+import React, { useState } from "react";
+import VoiceRecorderDialog from "./VoiceListening";
 
-const PromptBox = ({setAllMessageList}) => {
-    const [message, setMessage] = useState("");
-    const [isRecording, setIsRecording] = useState(false);
+const PromptBox = ({ setAllMessageList , setIsRecording, isRecording }) => {
+  const [message, setMessage] = useState("");
+  const [loading, setLoading] = useState(false);
 
-    const handleSend = () => {
-        if (message.trim()) {
-          console.log('Sending message:', message);
-          // response send and then append.
-          setAllMessageList((old) => {
-            const newMessages = [...old];
-            // newMessages.push(message)
-            return newMessages;
-          } )
-          setMessage('');
+  const sendMessage = async () => {
+    try {
+      const id = localStorage.getItem("chatID");
+      const response = await fetch(
+        `http://localhost:3000/api/v1/chats/${id}/messages`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ prompt: message, chatId: id }),
         }
-      };     
+      );
+      const data = await response.json();
+      if(data?.chat?.messages){
+        console.log(data);
+        setAllMessageList(data?.chat?.messages);
+      }
+
+      if (data?.chat) {
+        localStorage.setItem("chatID", data?.chat?._id);
+      }
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
+
+  const handleSend = (e) => {
+    setLoading(true);
+    if (message.trim()) {
+      console.log("Sending message:", message);
+      sendMessage();
+      // response send and then append.
+      setAllMessageList((old) => {
+        const newMessages = [...old];
+        // newMessages.push(message)
+        return newMessages;
+      });
+      setMessage("");
+    }
+    setLoading(false);
+  };
 
   const handleKeyPress = (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSend();
     }
@@ -30,37 +61,33 @@ const PromptBox = ({setAllMessageList}) => {
   };
 
   return (
-    <div className="border-t bg-gray-50 border border-slate-300 p-4 overflow-hidden rounded-xl">
-    <div className="flex items-center gap-2">
-      <button
-        onClick={toggleRecording}
-        className={`p-2 rounded-full ${
-          isRecording
-            ? 'bg-red-100 text-red-600'
-            : 'hover:bg-gray-100 text-gray-600'
-        }`}
-      >
-        <Mic className="w-5 h-5" />
-      </button>
-      <div className="flex-1 relative">
-        <textarea
-          value={message}
-          onChange={(e) => setMessage(e.target.value)}
-          onKeyPress={handleKeyPress}
-          placeholder="Your Mental Health Assistence"
-          className="w-full p-2 pr-10 border border-gray-200 rounded-lg placeholder-shown:text-gray-300 focus:outline-none focus:border-blue-500 resize-none"
-          rows="1"
-        />
+    <div className="border-t bg-gray-50 border border-slate-300 p-4 overflow-hidden rounded-xl fixed bottom-4 w-[80%] left-1/2 -translate-x-1/2">
+      <div className="flex items-center gap-2">
+        <VoiceRecorderDialog />
+        <div className="flex-1 relative">
+          <textarea
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+            onKeyPress={handleKeyPress}
+            placeholder="Your Mental Health Assistence"
+            className="w-full p-2 pr-10 border border-gray-200 rounded-lg placeholder-shown:text-gray-300 text-slate-900 focus:outline-none focus:border-blue-500 resize-none"
+            rows="1"
+          />
+        </div>
+        <button
+          onClick={handleSend}
+          className={`p-2 bg-blue-600 disabled:bg-gray-500 text-white rounded-full hover:bg-blue-700 transition-colors `}
+          disabled={loading}
+        >
+          {loading ? (
+            <Loader className="w-5 h-5" />
+          ) : (
+            <Send className="w-5 h-5" />
+          )}
+        </button>
       </div>
-      <button
-        onClick={handleSend}
-        className="p-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors"
-      >
-        <Send className="w-5 h-5" />
-      </button>
     </div>
-  </div>
-  )
-}
+  );
+};
 
-export default PromptBox
+export default PromptBox;

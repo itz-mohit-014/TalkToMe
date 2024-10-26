@@ -4,7 +4,7 @@ import { Chat } from "../Models/chat.model.js";
 
 const getChatById = async (req, res) => {
   try {
-    const { chatId } = req.body;
+    const { chatId } = req.params;
     const chat = await Chat.findById(chatId);
     if (!chat) {
       return res.status(404).json({ message: "Chat not found." });

@@ -6,12 +6,22 @@ import { createBrowserRouter, Outlet, RouterProvider } from 'react-router-dom'
 import HomePage from './component/HomePage.jsx'
 import NotFound from './component/NotFound.jsx'
 import ChatBot from './component/ChatBot.jsx'
+import AboutUs from './component/AboutPage.jsx'
+import HowItWorks from './component/HowItWorksPage.jsx'
 
 const router = createBrowserRouter([
   {
     path:"/",
     element:<HomePage/>,
     errorElement:<NotFound/>
+  },
+  {
+    path:"/how-it-works",
+    element:<HowItWorks/>
+    },
+  {
+    path:"/AboutUS",
+    element:<AboutUs/>
   },
   {
     path:"*",

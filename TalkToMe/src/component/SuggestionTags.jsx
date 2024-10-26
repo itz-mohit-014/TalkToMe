@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-const SuggestionTags = () => {
+const SuggestionTags = (setAllMessageList) => {
     const [position, setPosition] = useState(0);
     
     // Mental health related topics
@@ -22,6 +22,34 @@ const SuggestionTags = () => {
       "Emotional Support"
     ];
   
+
+    const sendMessage = async (message) => {
+      try {
+        const id = localStorage.getItem("chatID");
+        const response = await fetch(
+          `http://localhost:3000/api/v1/chats/${id}/messages`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ prompt: message, chatId: id }),
+          }
+        );
+        const data = await response.json();
+        if(data?.chat?.messages){
+          console.log(data);
+          setAllMessageList(data?.chat?.messages);
+        }
+  
+        if (data?.chat) {
+          localStorage.setItem("chatID", data?.chat?._id);
+        }
+      } catch (error) {
+        console.log("error", error);
+      }
+    };
+
     // Duplicate the array to create seamless scrolling
     const extendedSuggestions = [...suggestions, ...suggestions];
   
@@ -57,6 +85,7 @@ const SuggestionTags = () => {
                 className="whitespace-nowrap px-4 py-2 rounded-full bg-white border border-gray-200 
                          text-gray-700 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-600
                          transition-colors duration-200 shadow-sm"
+                         onClick={(e) => sendMessage(suggestion)}
               >
                 {suggestion}
               </button>
