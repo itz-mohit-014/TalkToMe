@@ -11,7 +11,7 @@ import VoiceRecorderDialog from "./VoiceListening";
 const ChatUI = () => {
   const [allMessageList, setAllMessageList] = useState([]);
   const messagesEndRef = useRef(null);
-  const [isRecording, setIsRecording] = useState(true);
+  const [isRecording, setIsRecording] = useState(false);
   const [isOpen , setIsOpen] = useState(false)
 
   const startChat = async (url, Credential = null) => {
@@ -62,11 +62,11 @@ const ChatUI = () => {
   return (
 
     <div className="flex flex-col h-screen bg-gray-100 relative">
-      <img src="/logo.png" alt="" className="fixed -top-[20%] left-[10%] h-screen object-contain"/>
+      <img src="/logo.png" alt="" className="fixed -top-[20%] left-[-15%] md:left-[25%] h-screen object-contain"/>
       <Header className=""/>
       {/* Main Chat Area */}
       <div
-        className={`flex-1 mt-2 w-full flex flex-col gap-4 p-4 pb-16 max-w-[80%] mx-auto  ${
+        className={`flex-1 mt-2 flex flex-col gap-4 p-4 pb-16 w-full md:max-w-[80%] mx-auto  ${
           allMessageList.length < 1 ? "justify-center" : ""
         } relative`}
       >
@@ -114,7 +114,7 @@ const ChatUI = () => {
         {allMessageList.length < 1 && <SuggestionTags setAllMessageList={setAllMessageList}/>}
         </div>
 
-        {isRecording && <VoiceRecordingDialog isRecording={isRecording}/>}
+        {isRecording && <VoiceRecordingDialog isRecording={isRecording} setIsRecording={setIsRecording}/>}
 
         <PromptBox
           setAllMessageList={setAllMessageList}

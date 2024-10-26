@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 
 const SuggestionTags = ({setAllMessageList}) => {
-    const [position, setPosition] = useState(0);
+  const [position, setPosition] = useState(0);
+  const [isOpen, setIsOpen] = useState(true)
     
     // Mental health related topics
     const suggestions = [
@@ -69,6 +70,7 @@ const SuggestionTags = ({setAllMessageList}) => {
     }, []);
   
     return (
+      isOpen && 
       <div className="w-full bg-gray-50 border border-slate-300 p-4 overflow-hidden h-32 rounded-3xl">
         <h3 className="text-gray-700 font-medium mb-3 text-center text-xl">Suggested Topics</h3>
         <div className="relative w-full mt-6">
@@ -85,7 +87,7 @@ const SuggestionTags = ({setAllMessageList}) => {
                 className="whitespace-nowrap px-4 py-2 rounded-full bg-white border border-gray-200 
                          text-gray-700 hover:bg-blue-50 hover:border-blue-200 hover:text-blue-600
                          transition-colors duration-200 shadow-sm"
-                         onClick={(e) => sendMessage(suggestion)}
+                         onClick={(e) =>{ sendMessage(suggestion); setIsOpen(false) }}
               >
                 {suggestion}
               </button>

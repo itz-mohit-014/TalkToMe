@@ -10,8 +10,8 @@ const HomePage = () => {
     <div className="bg-gradient-to-b from-green-50 via-white to-blue-50 min-h-screen relative">
       <Header/>
       <main className="text-center sm:py-16 py-8 px-4 relative z-[2] bg-blue-50/70 flex items-center h-[80dvh] justify-center flex-col ga-4">
-      <div className="absolute h-fit w-full z-[-1] top-0 left-0 overflow-hidden flex items-center justify-center">
-       <img src="./logo.png" alt="image" className='aspect-auto h-[100dvh] mix-blend-overlay object-contain'/>
+      <div className="absolute w-full z-[-1] top-0 left-0 overflow-hidden">
+       <img src="./logo.png" alt="image" className='h-[80%] sm:h-[40%] w-full sm:w-[40%] relative left-[-100px] sm:left-[20%] opacity-60 sm:translate-y-[-180px] mix-blend-overlay object-fit'/>
 
       </div>
         <h1 className="text-4xl sm:text-6xl font-serif text-[#1A365D] mb-6">

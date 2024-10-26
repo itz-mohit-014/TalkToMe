@@ -62,7 +62,7 @@ const PromptBox = ({ setAllMessageList , setIsRecording, isRecording }) => {
   };
 
   return (
-    <div className="border-t bg-gray-50 border border-slate-300 p-4 overflow-hidden rounded-xl fixed bottom-4 w-[80%] left-1/2 -translate-x-1/2">
+    <div className="border-t bg-gray-50 border border-slate-300 p-4 overflow-hidden rounded-xl fixed bottom-4 w-[90%] sm:w-[80%] left-1/2 -translate-x-1/2">
       <div className="flex items-center gap-2">
         <button
         onClick={() => setIsRecording(true)}
